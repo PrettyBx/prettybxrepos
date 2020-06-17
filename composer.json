@@ -1,0 +1,30 @@
+{
+    "name": "prettybx/repositories",
+    "description": "Pretty Bitrix Repositories",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artem Prozorov",
+            "email": "artem.g.prozorov@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "prettybx/fixtures": ">=0.0.1",
+        "prozorov/repositories": "^0.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrettyBx\\Repositories\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PrettyBx\\Repositories\\Tests\\": "tests/Unit"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
