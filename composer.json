@@ -12,7 +12,7 @@
     "minimum-stability": "stable",
     "require": {
         "prettybx/fixtures": ">=0.0.1",
-        "prozorov/repositories": "^0.0.1"
+        "prozorov/repositories": "dev-master"
     },
     "autoload": {
         "psr-4": {
