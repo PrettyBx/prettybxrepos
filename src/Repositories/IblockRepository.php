@@ -6,7 +6,7 @@ namespace PrettyBx\Repositories\Repositories;
 
 use Prozorov\Repositories\AbstractRepository;
 use PrettyBx\Support\Traits\LoadsModules;
-use Prozorov\Repositories\Parameters;
+use Prozorov\Repositories\Query;
 use PrettyBx\Repositories\Facades\IblockElement;
 
 class IblockRepository extends AbstractRepository
@@ -71,23 +71,19 @@ class IblockRepository extends AbstractRepository
     /**
      * @inheritDoc
      */
-    protected function doGet(array $filter, Parameters $params = null)
+    protected function doGet(Query $query)
     {
-        $select = array_merge(['ID'], $params ? $params->getSelect() ?? [] : []);
-        $orderBy = $params ? $params->getOrderBy() ?? false : false;
-        $pagination = $this->getPagination($params);
-
-        $query = IblockElement::GetList(
-            $orderBy,
-            $filter,
+        $iblockQuery = IblockElement::GetList(
+            $query->getOrderBy() ?? false,
+            $query->getWhere(),
             false,
-            $this->getPagination($params),
-            $select
+            $this->getPagination($query),
+            array_merge(['ID'], $query->getSelect())
         );
 
         $data = [];
 
-        while ($row = $query->GetNext()) {
+        while ($row = $iblockQuery->GetNext()) {
             $data[$row['ID']] = $row;
         }
 
@@ -98,20 +94,16 @@ class IblockRepository extends AbstractRepository
      * getPagination.
      *
      * @access	protected
-     * @param	Parameters	$params	Default: null
+     * @param	Query $query
      * @return	array|false
      */
-    protected function getPagination(Parameters $params = null)
+    protected function getPagination(Query $query)
     {
-        if (empty($params)) {
-            return false;
-        }
-
-        $pageNum = (int) $params->getOffset() / $params->getLimit();
+        $pageNum = (int) $query->getOffset() / $query->getLimit();
 
         return [
             'iNumPage' => $pageNum,
-            'nPageSize' => $params->getLimit(),
+            'nPageSize' => $query->getLimit(),
         ];
     }
 }
