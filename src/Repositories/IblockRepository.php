@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PrettyBx\Repositories;
+namespace PrettyBx\Repositories\Repositories;
 
 use Prozorov\Repositories\AbstractRepository;
 use PrettyBx\Support\Traits\LoadsModules;
