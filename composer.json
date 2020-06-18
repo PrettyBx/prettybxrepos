@@ -9,9 +9,9 @@
             "email": "artem.g.prozorov@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
-        "prettybx/fixtures": ">=0.0.1",
+        "prettybx/fixtures": ">=0.1.1",
         "prozorov/repositories": "dev-master"
     },
     "autoload": {

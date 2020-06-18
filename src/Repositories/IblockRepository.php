@@ -15,9 +15,18 @@ class IblockRepository extends AbstractRepository
 
     protected $modules = ['iblock'];
 
-    public function __construct()
+    /**
+     * @var int $iblockId
+     */
+    protected $iblockId;
+
+    public function __construct(int $iblockId = null)
     {
         $this->loadModules();
+
+        if (! empty($iblockId)) {
+            $this->iblockId = $iblockId;
+        }
     }
 
     /**
@@ -73,9 +82,15 @@ class IblockRepository extends AbstractRepository
      */
     protected function doGet(Query $query)
     {
+        $where = $query->getWhere();
+
+        if (! empty($this->iblockId)) {
+            $where = array_merge($where, ['IBLOCK_ID' => $this->iblockId]);
+        }
+
         $iblockQuery = IblockElement::GetList(
             $query->getOrderBy() ?? false,
-            $query->getWhere(),
+            $where,
             false,
             $this->getPagination($query),
             array_merge(['ID'], $query->getSelect())
@@ -105,5 +120,16 @@ class IblockRepository extends AbstractRepository
             'iNumPage' => $pageNum,
             'nPageSize' => $query->getLimit(),
         ];
+    }
+
+    /**
+     * getIblockId.
+     *
+     * @access	public
+     * @return	int|null
+     */
+    public function getIblockId(): ?int
+    {
+        return $this->iblockId;
     }
 }
